@@ -1,15 +1,16 @@
 package it.unibo.mvc;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-
 /**
  * This class is a simple application that writes a random number on a file.
  *
@@ -18,8 +19,8 @@ import java.util.Random;
  * such is just to be used to learn the basics, not as a template for your
  * applications.
  */
-public class MiniGUI {
 
+public class MiniGUI {
     private static final String TITLE = "A very simple GUI application";
     private static final int PROPORTION = 5;
     private final Random randomGenerator = new Random();
@@ -35,15 +36,26 @@ public class MiniGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //new  panel
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        canvas.add(panel, BorderLayout.CENTER);
+        panel.add(write);
+        final JTextField txt = new JTextField("Result: ");
+        canvas.add(txt, BorderLayout.NORTH);
         /*
-         * Handlers
+        * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                IO.println(randomGenerator.nextInt());
+                int var = randomGenerator.nextInt();
+                IO.println(var);
+                txt.setText("result: " + var);
             }
         });
+
     }
 
     private void display() {
@@ -70,6 +82,7 @@ public class MiniGUI {
          * Resize the frame to minimum size
          */
         frame.pack();
+
         /*
          * OK, ready to pull the frame onscreen
          */
